@@ -91,12 +91,18 @@ public class MainView extends JFrame {
         tabela = new JTable(tableModel);
         JScrollPane scroll = new JScrollPane(tabela);
         painelItens.add(scroll, BorderLayout.CENTER);
+
+        // Botão excluir
+        JButton btnExcluir = new JButton("Excluir");
+        btnExcluir.addActionListener(e -> excluirItem());
+        painelItens.add(btnExcluir, BorderLayout.SOUTH);
+
         tabbedPane.addTab("Tarefas", painelItens);
 
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(tableModel);
         tabela.setRowSorter(sorter);
 
-        // Ação do botão
+        // Ação do botão salvar
         btnSalvar.addActionListener(e -> {
             String titulo = campoTitulo.getText();
             String descricao = campoDescricao.getText();
@@ -123,6 +129,24 @@ public class MainView extends JFrame {
         comboResponsavel.setSelectedIndex(0);
         comboPrioridade.setSelectedIndex(0);
         campoDeadline.setText("");
+    }
+
+    private void excluirItem() {
+        int row = tabela.getSelectedRow();
+        if (row != -1) {
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Deseja excluir este item?",
+                    "Confirmar Exclusão",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                int modelRow = tabela.convertRowIndexToModel(row);
+                tableModel.removeRow(modelRow);
+                JOptionPane.showMessageDialog(this, "Item removido com sucesso!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um item para excluir.");
+        }
     }
 
     public static void main(String[] args) {
