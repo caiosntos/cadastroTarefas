@@ -106,6 +106,7 @@ public class MainView extends JFrame {
 
             if (!titulo.isEmpty() && !responsavel.equals("Selecione") && !prioridade.equals("Selecione")) {
                 tableModel.addRow(new Object[]{titulo, descricao, responsavel, prioridade, deadline});
+                JOptionPane.showMessageDialog(this,"Tarefa adicionada com sucesso!");
                 limparCampos();
             } else {
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos obrigatórios!");
